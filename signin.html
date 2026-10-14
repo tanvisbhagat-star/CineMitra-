@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In – CineMitra</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-container">
+      <div class="brand-logo">CM</div>
+      <div class="brand-text">
+        <span class="brand-title">CINE<span>MITRA</span></span>
+        <span class="brand-tagline">Movies. Magic. Memories.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link"><span>🏠</span> Home</a></li>
+      <li><a href="movies.html" class="nav-link"><span>🍿</span> Movies</a></li>
+      <li><a href="theaters.html" class="nav-link"><span>🏛️</span> Theaters</a></li>
+      <li><a href="recommend.html" class="nav-link"><span>✨</span> AI Recommendation</a></li>
+      <li><a href="mood.html" class="nav-link"><span>🎭</span> Mood Suggestion</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="location.html" class="city-badge">
+        <span>📍</span> <span id="nav-current-city">Pune</span>
+      </a>
+      <a href="signin.html" id="nav-user-btn" class="btn-signin">
+        <span>Sign In</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Step Tracker (Sign In is Step 1 of Booking flow) -->
+  <div class="booking-steps-bar">
+    <div class="steps-container">
+      <div class="step-item active">
+        <div class="step-circle">1</div>
+        <span>Sign In</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">2</div>
+        <span>Location</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">3</div>
+        <span>Theaters</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">4</div>
+        <span>Movies</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">5</div>
+        <span>Seats</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-content" style="display: flex; align-items: center; justify-content: center;">
+    
+    <div class="auth-wrapper">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div class="brand-logo" style="margin: 0 auto 0.75rem auto; width: 50px; height: 50px; font-size: 1.5rem;">CM</div>
+        <h2 style="font-size: 1.6rem; color: #ffffff; margin-bottom: 0.25rem;" id="auth-heading">Welcome to CineMitra</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;" id="auth-subheading">Sign in to book tickets and get personalized movie suggestions</p>
+      </div>
+
+      <!-- Auth Tabs: Sign In / Sign Up -->
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="tab-signin" onclick="switchAuthTab('signin')">Sign In</div>
+        <div class="auth-tab" id="tab-signup" onclick="switchAuthTab('signup')">Create Account</div>
+      </div>
+
+      <!-- Alert Message Box -->
+      <div id="auth-alert" style="display: none; padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1.25rem; font-size: 0.9rem;"></div>
+
+      <!-- Sign In Form -->
+      <form id="signin-form" onsubmit="handleAuthSubmit(event)">
+        
+        <div class="form-field" id="name-field-container" style="display: none; margin-bottom: 1.2rem;">
+          <label for="auth-name">Full Name</label>
+          <input type="text" id="auth-name" placeholder="Enter your full name">
+        </div>
+
+        <div class="form-field" style="margin-bottom: 1.2rem;">
+          <label for="auth-identifier">Email or Mobile Number</label>
+          <input type="text" id="auth-identifier" placeholder="e.g. rahul@example.com or 9876543210" required>
+        </div>
+
+        <div class="form-field" style="margin-bottom: 1.5rem;">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" placeholder="Enter your password" required minlength="4">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem;" id="auth-submit-btn">
+          <span>Sign In to CineMitra</span>
+        </button>
+
+        <div style="margin-top: 1.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+          <span id="auth-toggle-prompt">Don't have an account?</span>
+          <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--accent-red); font-weight: 600; text-decoration: none; margin-left: 4px;" id="auth-toggle-link">Sign Up</a>
+        </div>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-title" style="font-size: 1.2rem; margin-bottom: 0.4rem;">
+          CINE<span style="color: var(--accent-red);">MITRA</span>
+        </div>
+        <p class="brand-tagline">Movies. Magic. Memories.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 CineMitra Entertainment Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    let currentAuthMode = 'signin';
+
+    function switchAuthTab(mode) {
+      currentAuthMode = mode;
+      const tabSignIn = document.getElementById('tab-signin');
+      const tabSignUp = document.getElementById('tab-signup');
+      const nameContainer = document.getElementById('name-field-container');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const heading = document.getElementById('auth-heading');
+      const subheading = document.getElementById('auth-subheading');
+      const togglePrompt = document.getElementById('auth-toggle-prompt');
+      const toggleLink = document.getElementById('auth-toggle-link');
+      const alertBox = document.getElementById('auth-alert');
+      alertBox.style.display = 'none';
+
+      if (mode === 'signin') {
+        tabSignIn.classList.add('active');
+        tabSignUp.classList.remove('active');
+        nameContainer.style.display = 'none';
+        submitBtn.innerHTML = '<span>Sign In to CineMitra</span>';
+        heading.textContent = 'Welcome Back';
+        subheading.textContent = 'Sign in to access your bookings and favorite Indian cinema';
+        togglePrompt.textContent = "Don't have an account?";
+        toggleLink.textContent = "Sign Up";
+      } else {
+        tabSignUp.classList.add('active');
+        tabSignIn.classList.remove('active');
+        nameContainer.style.display = 'flex';
+        submitBtn.innerHTML = '<span>Create CineMitra Account</span>';
+        heading.textContent = 'Join CineMitra';
+        subheading.textContent = 'Unlock personalized AI movie recommendations & instant booking';
+        togglePrompt.textContent = "Already have an account?";
+        toggleLink.textContent = "Sign In";
+      }
+    }
+
+    function toggleAuthMode() {
+      switchAuthTab(currentAuthMode === 'signin' ? 'signup' : 'signin');
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const identifier = document.getElementById('auth-identifier').value.trim();
+      const password = document.getElementById('auth-password').value.trim();
+      const name = document.getElementById('auth-name').value.trim();
+      const alertBox = document.getElementById('auth-alert');
+
+      // Basic Validation
+      if (!identifier) {
+        showAlert("Please enter your email or mobile number.", "error");
+        return;
+      }
+      if (password.length < 4) {
+        showAlert("Password must be at least 4 characters long.", "error");
+        return;
+      }
+
+      // Valid email or 10-digit mobile check
+      const isEmail = identifier.includes('@');
+      const isMobile = /^\d{10}$/.test(identifier.replace(/\D/g, ''));
+      if (!isEmail && !isMobile) {
+        showAlert("Please enter a valid email address or 10-digit mobile number.", "error");
+        return;
+      }
+
+      // Successful login/signup message
+      const displayName = name || (isEmail ? identifier.split('@')[0] : `User ${identifier.slice(-4)}`);
+      const userData = {
+        name: displayName,
+        email: identifier,
+        isLoggedIn: true,
+        loginTime: new Date().toISOString()
+      };
+
+      // Store in localStorage
+      CineMitra.setUser(userData);
+
+      showAlert(
+        currentAuthMode === 'signin' 
+          ? `Welcome back, ${displayName}! Redirecting to location selection...` 
+          : `Account created successfully, ${displayName}! Redirecting to location selection...`,
+        "success"
+      );
+
+      // Redirect to location.html after successful login
+      setTimeout(() => {
+        window.location.href = "location.html";
+      }, 1200);
+    }
+
+    function showAlert(msg, type) {
+      const alertBox = document.getElementById('auth-alert');
+      alertBox.textContent = msg;
+      alertBox.style.display = 'block';
+      if (type === 'success') {
+        alertBox.style.background = 'rgba(34, 197, 94, 0.15)';
+        alertBox.style.border = '1px solid rgba(34, 197, 94, 0.4)';
+        alertBox.style.color = '#4ade80';
+      } else {
+        alertBox.style.background = 'rgba(239, 68, 68, 0.15)';
+        alertBox.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+        alertBox.style.color = '#f87171';
+      }
+    }
+  </script>
+</body>
+</html>

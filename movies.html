@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movies in Theater – CineMitra</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-container">
+      <div class="brand-logo">CM</div>
+      <div class="brand-text">
+        <span class="brand-title">CINE<span>MITRA</span></span>
+        <span class="brand-tagline">Movies. Magic. Memories.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link"><span>🏠</span> Home</a></li>
+      <li><a href="movies.html" class="nav-link active"><span>🍿</span> Movies</a></li>
+      <li><a href="theaters.html" class="nav-link"><span>🏛️</span> Theaters</a></li>
+      <li><a href="recommend.html" class="nav-link"><span>✨</span> AI Recommendation</a></li>
+      <li><a href="mood.html" class="nav-link"><span>🎭</span> Mood Suggestion</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="location.html" class="city-badge" title="Change city">
+        <span>📍</span> <span id="nav-current-city">Pune</span>
+      </a>
+      <a href="signin.html" id="nav-user-btn" class="btn-signin">
+        <span>Sign In</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Step Tracker (Step 4: Movies) -->
+  <div class="booking-steps-bar">
+    <div class="steps-container">
+      <a href="signin.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Sign In</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="location.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Location</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="theaters.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Theaters</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <div class="step-item active">
+        <div class="step-circle">4</div>
+        <span>Movies</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">5</div>
+        <span>Seats</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-content">
+    
+    <!-- Theater Banner Context -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Selected Cinema Hall</div>
+        <h2 id="theater-banner-name" style="font-size: 1.35rem; color: #ffffff; margin-top: 0.2rem;">PVR Cinemas, Pune</h2>
+        <p id="theater-banner-area" style="font-size: 0.85rem; color: var(--text-muted);">Pavilion Mall, SB Road, Pune</p>
+      </div>
+      <a href="theaters.html" class="btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">
+        Change Theater
+      </a>
+    </div>
+
+    <!-- Filter & Search Controls Bar -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <span class="filter-label">Filter Movies:</span>
+        <select id="movie-lang-filter" class="filter-select">
+          <option value="All">All Languages</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Marathi">Marathi</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Malayalam">Malayalam</option>
+          <option value="Kannada">Kannada</option>
+        </select>
+
+        <select id="movie-genre-filter" class="filter-select">
+          <option value="All">All Genres</option>
+          <option value="Action">Action</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Drama">Drama</option>
+          <option value="Romance">Romance</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Horror">Horror</option>
+        </select>
+      </div>
+
+      <div class="filter-group" style="position: relative;">
+        <span class="search-icon-nav" style="left: 0.75rem;">🔍</span>
+        <input type="text" id="movie-search-input" class="search-input-main" placeholder="Search by movie name, genre...">
+      </div>
+    </div>
+
+    <!-- Movies Grid Header -->
+    <div class="section-header">
+      <div>
+        <h1 class="section-title">
+          <span class="accent-bar"></span> Now Showing in Theater
+        </h1>
+        <p class="section-subtitle">Real movies loaded from Indian Cinema CSV dataset</p>
+      </div>
+      <span id="movies-count-badge" class="badge-rating" style="background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-subtle);">
+        Showing 0 movies
+      </span>
+    </div>
+
+    <!-- Movies Grid -->
+    <div class="movies-grid" id="movies-list-container">
+      <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+        <p style="font-size: 1.5rem;">🍿</p>
+        <p>Loading available movies from database...</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-title" style="font-size: 1.2rem; margin-bottom: 0.4rem;">
+          CINE<span style="color: var(--accent-red);">MITRA</span>
+        </div>
+        <p class="brand-tagline">Movies. Magic. Memories.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 CineMitra Entertainment Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    let theaterMovies = [];
+
+    async function initMoviesPage() {
+      // Restore selected theater info
+      let theater = CineMitra.getTheater();
+      const city = CineMitra.getCity();
+      if (!theater) {
+        theater = {
+          id: `${city.toLowerCase()}-1`,
+          name: `PVR ICON Multiplex, ${city}`,
+          area: "City Center, Main Mall",
+          city: city
+        };
+        CineMitra.setTheater(theater);
+      }
+
+      document.getElementById('theater-banner-name').textContent = theater.name;
+      document.getElementById('theater-banner-area').textContent = `📍 ${theater.area || theater.city || city}`;
+
+      // Check URL query for direct search
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialSearch = urlParams.get('search') || '';
+      if (initialSearch) {
+        document.getElementById('movie-search-input').value = initialSearch;
+      }
+
+      try {
+        const response = await fetch('/api/movies');
+        const data = await response.json();
+
+        if (data.success && data.movies && data.movies.length > 0) {
+          theaterMovies = data.movies;
+          applyMovieFilters();
+        } else {
+          document.getElementById('movies-list-container').innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+              <h3>No movies currently playing</h3>
+              <p>Dataset returned 0 records.</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error("Error loading movies:", err);
+      }
+    }
+
+    function applyMovieFilters() {
+      const lang = document.getElementById('movie-lang-filter').value;
+      const genre = document.getElementById('movie-genre-filter').value;
+      const search = document.getElementById('movie-search-input').value.toLowerCase().trim();
+
+      const filtered = theaterMovies.filter(m => {
+        const matchLang = (lang === 'All' || m['Language'].toLowerCase() === lang.toLowerCase());
+        const matchGenre = (genre === 'All' || m['Genre'].toLowerCase().includes(genre.toLowerCase()));
+        const matchSearch = (!search || 
+          m['Movie Name'].toLowerCase().includes(search) || 
+          m['Genre'].toLowerCase().includes(search) ||
+          m['Language'].toLowerCase().includes(search)
+        );
+        return matchLang && matchGenre && matchSearch;
+      });
+
+      document.getElementById('movies-count-badge').textContent = `Showing ${filtered.length} movies`;
+      const container = document.getElementById('movies-list-container');
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">
+            <p style="font-size: 2rem;">🔍</p>
+            <h3>No movies match your filter</h3>
+            <p style="margin-top: 0.5rem;">Try changing language, genre, or search terms.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(m => CineMitra.createMovieCard(m, "Select Show Timings →")).join('');
+    }
+
+    document.getElementById('movie-lang-filter').addEventListener('change', applyMovieFilters);
+    document.getElementById('movie-genre-filter').addEventListener('change', applyMovieFilters);
+    document.getElementById('movie-search-input').addEventListener('input', applyMovieFilters);
+
+    document.addEventListener('DOMContentLoaded', initMoviesPage);
+  </script>
+</body>
+</html>

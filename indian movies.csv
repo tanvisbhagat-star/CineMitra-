@@ -1,0 +1,71 @@
+ID,Movie Name,Year,Timing(min),Rating(10),Votes,Genre,Language
+1,3 Idiots,2009,170,8.4,420000,"Comedy, Drama",Hindi
+2,Dangal,2016,161,8.3,210000,"Action, Biography, Drama",Hindi
+3,RRR,2022,187,7.8,165000,"Action, Drama",Telugu
+4,K.G.F: Chapter 2,2022,168,8.2,150000,"Action, Crime, Drama",Kannada
+5,Baahubali 2: The Conclusion,2017,167,8.2,110000,"Action, Drama",Telugu
+6,Sairat,2016,174,8.3,25000,"Drama, Romance",Marathi
+7,Kantara,2022,148,8.2,105000,"Action, Adventure, Drama",Kannada
+8,Vikram,2022,175,8.3,72000,"Action, Crime, Thriller",Tamil
+9,Drishyam,2015,163,8.2,135000,"Crime, Drama, Mystery",Hindi
+10,Tumbbad,2018,104,8.2,60000,"Drama, Fantasy, Horror",Hindi
+11,Sholay,1975,204,8.1,58000,"Action, Adventure, Comedy",Hindi
+12,Dilwale Dulhania Le Jayenge,1995,189,8.0,75000,"Drama, Romance",Hindi
+13,Lagaan: Once Upon a Time in India,2001,224,8.1,120000,"Adventure, Drama, Musical",Hindi
+14,Taare Zameen Par,2007,165,8.3,200000,"Drama, Family",Hindi
+15,Swades,2004,210,8.2,95000,Drama,Hindi
+16,Andhadhun,2018,139,8.2,115000,"Crime, Mystery, Thriller",Hindi
+17,Queen,2013,146,8.1,70000,"Adventure, Comedy, Drama",Hindi
+18,Hera Pheri,2000,156,8.2,78000,"Comedy, Crime, Drama",Hindi
+19,Golmaal: Fun Unlimited,2006,150,7.5,48000,"Comedy, Drama",Hindi
+20,Chhichhore,2019,143,8.3,62000,"Comedy, Drama, Romance",Hindi
+21,Stree,2018,128,7.5,42000,"Comedy, Horror",Hindi
+22,Stree 2,2024,147,7.7,38000,"Comedy, Horror",Hindi
+23,Jawan,2023,169,7.0,92000,"Action, Thriller",Hindi
+24,Pathaan,2023,146,5.9,155000,"Action, Thriller",Hindi
+25,Kalki 2898 AD,2024,181,7.6,85000,"Action, Adventure, Sci-Fi",Telugu
+26,Pushpa: The Rise,2021,179,7.6,90000,"Action, Crime, Drama",Telugu
+27,Pushpa 2: The Rule,2024,200,7.8,75000,"Action, Crime, Drama",Telugu
+28,Jailer,2023,168,7.1,64000,"Action, Crime, Thriller",Tamil
+29,Leo,2023,164,7.2,70000,"Action, Crime, Drama",Tamil
+30,Manjummel Boys,2024,135,8.4,45000,"Adventure, Drama, Thriller",Malayalam
+31,Premalu,2024,156,7.9,28000,"Comedy, Romance",Malayalam
+32,Aavesham,2024,158,7.9,35000,"Action, Comedy",Malayalam
+33,Katyar Kaljat Ghusali,2015,162,8.4,12000,"Drama, Musical",Marathi
+34,Natsamrat,2016,166,8.8,18000,Drama,Marathi
+35,Court,2014,116,7.6,9000,Drama,Marathi
+36,Baaplyok,2023,115,8.1,4000,"Drama, Family",Marathi
+37,Chhatrapati Sambhaji Maharaj,2024,145,8.0,15000,"Action, Biography, History",Marathi
+38,Zindagi Na Milegi Dobara,2011,155,8.2,85000,"Comedy, Drama, Romance",Hindi
+39,Barfi!,2012,151,8.1,88000,"Comedy, Drama, Romance",Hindi
+40,Jab We Met,2007,138,7.9,78000,"Comedy, Romance",Hindi
+41,Bajrangi Bhaijaan,2015,163,8.1,105000,"Action, Adventure, Comedy",Hindi
+42,Chak De! India,2007,153,8.1,89000,"Drama, Family, Sport",Hindi
+43,Gangs of Wasseypur,2012,321,8.2,98000,"Action, Comedy, Crime",Hindi
+44,PK,2014,153,8.1,190000,"Comedy, Drama, Sci-Fi",Hindi
+45,Article 15,2019,130,8.1,38000,"Crime, Drama, Thriller",Hindi
+46,Kahaani,2012,122,8.1,66000,"Mystery, Thriller",Hindi
+47,A Wednesday,2008,104,8.1,82000,"Action, Crime, Drama",Hindi
+48,Munna Bhai M.B.B.S.,2003,156,8.1,86000,"Comedy, Drama, Musical",Hindi
+49,Lage Raho Munna Bhai,2006,144,8.0,55000,"Comedy, Drama, Romance",Hindi
+50,Special 26,2013,144,8.0,63000,"Crime, Drama, Thriller",Hindi
+51,Ponniyin Selvan: Part I,2022,167,7.6,44000,"Action, Adventure, Drama",Tamil
+52,Asuran,2019,141,8.4,36000,"Action, Drama",Tamil
+53,Super Deluxe,2019,176,8.3,28000,"Action, Crime, Drama",Tamil
+54,Soorarai Pottru,2020,153,8.7,125000,"Action, Drama",Tamil
+55,Jai Bhim,2021,164,8.8,220000,"Crime, Drama, Mystery",Tamil
+56,Kumbalangi Nights,2019,135,8.5,24000,"Comedy, Drama, Romance",Malayalam
+57,Drishyam 2,2021,152,8.4,48000,"Crime, Drama, Thriller",Malayalam
+58,Lucifer,2019,175,7.5,21000,"Action, Crime, Drama",Malayalam
+59,Charlie,2015,130,8.0,16000,"Drama, Romance, Thriller",Malayalam
+60,12th Fail,2023,147,8.9,130000,"Biography, Drama",Hindi
+61,Laapataa Ladies,2024,122,8.4,56000,"Comedy, Drama",Hindi
+62,Maharaja,2024,140,8.5,68000,"Action, Crime, Drama",Tamil
+63,Hanu-Man,2024,158,7.9,32000,"Action, Adventure, Fantasy",Telugu
+64,Devara: Part 1,2024,178,6.5,41000,"Action, Drama, Thriller",Telugu
+65,Bhool Bhulaiyaa 3,2024,158,6.8,30000,"Comedy, Horror, Mystery",Hindi
+66,Singham Again,2024,144,6.2,25000,"Action, Drama",Hindi
+67,Drishyam 2 (Hindi),2022,140,8.2,46000,"Crime, Drama, Mystery",Hindi
+68,Baby John,2024,150,7.1,18000,"Action, Thriller",Hindi
+69,Gadar 2,2023,170,5.2,60000,"Action, Adventure, Drama",Hindi
+70,Animal,2023,201,6.6,98000,"Action, Crime, Drama",Hindi

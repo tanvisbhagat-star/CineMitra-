@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select City – CineMitra</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-container">
+      <div class="brand-logo">CM</div>
+      <div class="brand-text">
+        <span class="brand-title">CINE<span>MITRA</span></span>
+        <span class="brand-tagline">Movies. Magic. Memories.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link"><span>🏠</span> Home</a></li>
+      <li><a href="movies.html" class="nav-link"><span>🍿</span> Movies</a></li>
+      <li><a href="theaters.html" class="nav-link"><span>🏛️</span> Theaters</a></li>
+      <li><a href="recommend.html" class="nav-link"><span>✨</span> AI Recommendation</a></li>
+      <li><a href="mood.html" class="nav-link"><span>🎭</span> Mood Suggestion</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <span class="city-badge" style="border-color: var(--accent-red);">
+        <span>📍</span> <span id="nav-current-city">Pune</span>
+      </span>
+      <a href="signin.html" id="nav-user-btn" class="btn-signin">
+        <span>Sign In</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Step Tracker (Step 2: Location) -->
+  <div class="booking-steps-bar">
+    <div class="steps-container">
+      <a href="signin.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Sign In</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <div class="step-item active">
+        <div class="step-circle">2</div>
+        <span>Location</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">3</div>
+        <span>Theaters</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">4</div>
+        <span>Movies</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step-item">
+        <div class="step-circle">5</div>
+        <span>Seats</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-content">
+    
+    <div style="text-align: center; max-width: 650px; margin: 1rem auto 2.5rem auto;">
+      <h1 style="font-size: 2.2rem; color: #ffffff; margin-bottom: 0.5rem;">Select Your City</h1>
+      <p style="color: var(--text-muted); font-size: 1.05rem;">
+        Find nearby cinema screens, Dolby Atmos multiplexes, and regional Indian movie releases
+      </p>
+
+      <!-- City search input -->
+      <div style="margin-top: 1.5rem; position: relative; max-width: 400px; margin-left: auto; margin-right: auto;">
+        <span class="search-icon-nav" style="left: 1rem; top: 0.75rem;">🔍</span>
+        <input 
+          type="text" 
+          id="city-search" 
+          class="search-input-main" 
+          style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.8rem; border-radius: 9999px;" 
+          placeholder="Filter city (e.g. Pune, Mumbai)..."
+          oninput="filterCities()"
+        >
+      </div>
+    </div>
+
+    <!-- Cities Grid -->
+    <div class="cities-grid" id="cities-container">
+      <!-- Generated via JS for exact list: Pune, Mumbai, Nashik, Nagpur, Delhi, Bengaluru, Hyderabad, Chennai, Kolkata -->
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-title" style="font-size: 1.2rem; margin-bottom: 0.4rem;">
+          CINE<span style="color: var(--accent-red);">MITRA</span>
+        </div>
+        <p class="brand-tagline">Movies. Magic. Memories.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 CineMitra Entertainment Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    const CITIES = [
+      { name: "Pune", icon: "🏛️", state: "Maharashtra", theaters: "4 Multiplexes • City Pride, PVR, Cinepolis" },
+      { name: "Mumbai", icon: "🌊", state: "Maharashtra", theaters: "7 Multiplexes • PVR ICON, INOX Megaplex" },
+      { name: "Nashik", icon: "🍇", state: "Maharashtra", theaters: "3 Multiplexes • Cinemax City Centre, PVR" },
+      { name: "Nagpur", icon: "🍊", state: "Maharashtra", theaters: "3 Multiplexes • Cinepolis VR, Empress Mall" },
+      { name: "Delhi", icon: "🕌", state: "NCR", theaters: "6 Multiplexes • PVR Plaza, Director's Cut" },
+      { name: "Bengaluru", icon: "💻", state: "Karnataka", theaters: "5 Multiplexes • PVR Superplex, Nexus Mall" },
+      { name: "Hyderabad", icon: "🏰", state: "Telangana", theaters: "4 Multiplexes • Prasad's Large Screen, AMB" },
+      { name: "Chennai", icon: "🏖️", state: "Tamil Nadu", theaters: "4 Multiplexes • SPI Sathyam, VR Chennai" },
+      { name: "Kolkata", icon: "🌁", state: "West Bengal", theaters: "4 Multiplexes • INOX South City, Mani Square" }
+    ];
+
+    function renderCities(cityList) {
+      const container = document.getElementById('cities-container');
+      const currentCity = CineMitra.getCity();
+
+      if (cityList.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+            <p>No city found matching your search.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = cityList.map(c => `
+        <div class="city-card ${c.name === currentCity ? 'selected' : ''}" onclick="selectCity('${c.name}')">
+          <div class="city-icon">${c.icon}</div>
+          <div class="city-info">
+            <h3>${c.name}</h3>
+            <p>${c.state}</p>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 4px;">${c.theaters}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCities() {
+      const query = document.getElementById('city-search').value.toLowerCase().trim();
+      const filtered = CITIES.filter(c => c.name.toLowerCase().includes(query) || c.state.toLowerCase().includes(query));
+      renderCities(filtered);
+    }
+
+    function selectCity(cityName) {
+      CineMitra.setCity(cityName);
+      CineMitra.toast(`Selected city: ${cityName}`);
+      
+      // Redirect to theaters.html as requested
+      setTimeout(() => {
+        window.location.href = "theaters.html";
+      }, 400);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCities(CITIES);
+    });
+  </script>
+</body>
+</html>

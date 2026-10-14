@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Suggestion – CineMitra</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-container">
+      <div class="brand-logo">CM</div>
+      <div class="brand-text">
+        <span class="brand-title">CINE<span>MITRA</span></span>
+        <span class="brand-tagline">Movies. Magic. Memories.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link"><span>🏠</span> Home</a></li>
+      <li><a href="movies.html" class="nav-link"><span>🍿</span> Movies</a></li>
+      <li><a href="theaters.html" class="nav-link"><span>🏛️</span> Theaters</a></li>
+      <li><a href="recommend.html" class="nav-link accent-pill"><span>✨</span> AI Recommendation</a></li>
+      <li><a href="mood.html" class="nav-link active"><span>🎭</span> Mood Suggestion</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="location.html" class="city-badge" title="Change city">
+        <span>📍</span> <span id="nav-current-city">Pune</span>
+      </a>
+      <a href="signin.html" id="nav-user-btn" class="btn-signin">
+        <span>Sign In</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    
+    <div style="text-align: center; max-width: 700px; margin: 0 auto 2.5rem auto;">
+      <div class="hero-badge" style="background: rgba(229, 9, 20, 0.2); border-color: rgba(229, 9, 20, 0.4); color: #ff8085;">
+        🎭 Emotional Vibe Discovery
+      </div>
+      <h1 style="font-size: 2.3rem; color: #ffffff; margin-bottom: 0.5rem;">
+        How Are You Feeling Today?
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1rem;">
+        Select your current mood below. CineMitra automatically maps your emotion to matching cinema genres from our authentic Indian movies database.
+      </p>
+    </div>
+
+    <!-- Mood Selection Cards Grid -->
+    <div class="mood-grid" id="mood-selector-container">
+      <!-- Generated via JS for:
+           😊 Happy, 😂 Funny, ❤️ Romantic, 😢 Emotional, 😱 Scared, 
+           🔥 Excited, 🧠 Thoughtful, 😌 Relaxed, 💪 Motivated, 🕵️ Suspenseful -->
+    </div>
+
+    <!-- Mood Results Header -->
+    <div class="section-header" id="results-header" style="margin-top: 1.5rem;">
+      <div>
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Movies Matching "<span id="active-mood-title" style="color: var(--accent-red);">Happy</span>"
+        </h2>
+        <p class="section-subtitle" id="active-genres-desc">Mapped to genres: Comedy, Family, Drama</p>
+      </div>
+      <span id="mood-movie-count" class="badge-rating" style="background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-subtle);">
+        Loading movies...
+      </span>
+    </div>
+
+    <!-- Matching Movies Grid -->
+    <div class="movies-grid" id="mood-movies-container">
+      <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+        <p style="font-size: 2rem;">🎭</p>
+        <p>Loading movies for selected mood...</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-title" style="font-size: 1.2rem; margin-bottom: 0.4rem;">
+          CINE<span style="color: var(--accent-red);">MITRA</span>
+        </div>
+        <p class="brand-tagline">Movies. Magic. Memories.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 CineMitra Entertainment Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    const MOODS = [
+      { name: "Happy", emoji: "😊", genres: "Comedy, Family, Drama", tagline: "Uplifting & joyful stories" },
+      { name: "Funny", emoji: "😂", genres: "Comedy", tagline: "Laugh-out-loud humor" },
+      { name: "Romantic", emoji: "❤️", genres: "Romance, Drama", tagline: "Love, passion & heartstrings" },
+      { name: "Emotional", emoji: "😢", genres: "Drama, Family", tagline: "Tearjerkers & moving tales" },
+      { name: "Scared", emoji: "😱", genres: "Horror, Thriller", tagline: "Spine-chilling paranormal chills" },
+      { name: "Excited", emoji: "🔥", genres: "Action, Adventure", tagline: "High-octane Indian blockbusters" },
+      { name: "Thoughtful", emoji: "🧠", genres: "Drama, Mystery", tagline: "Deep, philosophical & gripping" },
+      { name: "Relaxed", emoji: "😌", genres: "Family, Comedy", tagline: "Cozy & soothing entertainment" },
+      { name: "Motivated", emoji: "💪", genres: "Drama, Inspirational, Sport", tagline: "Underdog triumphs & true grit" },
+      { name: "Suspenseful", emoji: "🕵️", genres: "Thriller, Mystery", tagline: "Edge-of-the-seat plot twists" }
+    ];
+
+    let currentSelectedMood = "Happy";
+
+    function renderMoodCards() {
+      const container = document.getElementById('mood-selector-container');
+      container.innerHTML = MOODS.map(m => `
+        <div 
+          class="mood-card ${m.name === currentSelectedMood ? 'active' : ''}" 
+          id="mood-btn-${m.name}"
+          onclick="pickMood('${m.name}')"
+        >
+          <span class="mood-emoji">${m.emoji}</span>
+          <div class="mood-title">${m.name}</div>
+          <div class="mood-genres">${m.genres}</div>
+          <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 4px;">${m.tagline}</div>
+        </div>
+      `).join('');
+    }
+
+    async function pickMood(moodName) {
+      currentSelectedMood = moodName;
+
+      // Update card active classes
+      document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById(`mood-btn-${moodName}`);
+      if (activeCard) activeCard.classList.add('active');
+
+      const moodObj = MOODS.find(m => m.name === moodName);
+      document.getElementById('active-mood-title').textContent = `${moodObj.emoji} ${moodName}`;
+      document.getElementById('active-genres-desc').textContent = `Mapped to genres: ${moodObj.genres}`;
+
+      const container = document.getElementById('mood-movies-container');
+      container.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+          <p style="font-size: 2rem;">⏳</p>
+          <p>Querying Indian cinema database for ${moodName} movies...</p>
+        </div>
+      `;
+
+      try {
+        const response = await fetch(`/api/mood?mood=${encodeURIComponent(moodName)}`);
+        const data = await response.json();
+
+        if (data.success && data.movies && data.movies.length > 0) {
+          document.getElementById('mood-movie-count').textContent = `${data.movies.length} Movies Found`;
+          container.innerHTML = data.movies.map(m => {
+            return CineMitra.createMovieCard(m, "Book This Movie →", m.reason);
+          }).join('');
+        } else {
+          document.getElementById('mood-movie-count').textContent = `0 Movies`;
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">
+              <h3>No movies found for this mood in the dataset</h3>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error("Error loading mood movies:", err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderMoodCards();
+      pickMood("Happy");
+    });
+  </script>
+</body>
+</html>

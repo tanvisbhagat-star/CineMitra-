@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Show Timing – CineMitra</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-container">
+      <div class="brand-logo">CM</div>
+      <div class="brand-text">
+        <span class="brand-title">CINE<span>MITRA</span></span>
+        <span class="brand-tagline">Movies. Magic. Memories.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link"><span>🏠</span> Home</a></li>
+      <li><a href="movies.html" class="nav-link"><span>🍿</span> Movies</a></li>
+      <li><a href="theaters.html" class="nav-link"><span>🏛️</span> Theaters</a></li>
+      <li><a href="recommend.html" class="nav-link"><span>✨</span> AI Recommendation</a></li>
+      <li><a href="mood.html" class="nav-link"><span>🎭</span> Mood Suggestion</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="location.html" class="city-badge" title="Change city">
+        <span>📍</span> <span id="nav-current-city">Pune</span>
+      </a>
+      <a href="signin.html" id="nav-user-btn" class="btn-signin">
+        <span>Sign In</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Step Tracker (Step 4 -> Show Timing) -->
+  <div class="booking-steps-bar">
+    <div class="steps-container">
+      <a href="signin.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Sign In</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="location.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Location</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="theaters.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Theaters</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="movies.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Movies</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <div class="step-item active">
+        <div class="step-circle">5</div>
+        <span>Shows</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-content">
+    
+    <!-- Selected Movie & Theater Info Header -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+      
+      <div style="width: 100px; height: 140px; border-radius: 8px; overflow: hidden; background: #111827; flex-shrink: 0;">
+        <img id="show-movie-poster" src="" alt="Movie Poster" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&auto=format&fit=crop&q=80'">
+      </div>
+
+      <div style="flex: 1;">
+        <div style="font-size: 0.8rem; color: var(--accent-red); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Selected Movie</div>
+        <h1 id="show-movie-title" style="font-size: 1.8rem; color: #ffffff; margin-bottom: 0.3rem;">Movie Name</h1>
+        
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.6rem; font-size: 0.85rem; color: var(--text-muted);">
+          <span class="badge-rating" id="show-movie-rating">⭐ 8.0</span>
+          <span id="show-movie-lang">Hindi</span>
+          <span>•</span>
+          <span id="show-movie-genre">Action, Drama</span>
+          <span>•</span>
+          <span id="show-movie-time">160 min</span>
+        </div>
+
+        <div style="font-size: 0.9rem; color: #cbd5e1;">
+          <strong>Cinema:</strong> <span id="show-theater-name">PVR ICON</span> (<span id="show-theater-city">Pune</span>)
+        </div>
+      </div>
+
+      <div>
+        <a href="movies.html" class="btn-secondary" style="font-size: 0.85rem;">Change Movie</a>
+      </div>
+    </div>
+
+    <!-- Date Picker Section -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">
+          <span class="accent-bar"></span> 1. Select Date
+        </h2>
+        <p class="section-subtitle">Choose day for your cinema screening</p>
+      </div>
+    </div>
+
+    <div class="showtime-date-picker" id="date-picker-container">
+      <!-- Dates populated via JS -->
+    </div>
+
+    <!-- Show Timings Section -->
+    <div class="section-header" style="margin-top: 2rem;">
+      <div>
+        <h2 class="section-title">
+          <span class="accent-bar"></span> 2. Select Show Timing
+        </h2>
+        <p class="section-subtitle">Pick from available prime morning, afternoon, and evening slots</p>
+      </div>
+    </div>
+
+    <div class="shows-grid" id="shows-container">
+      <!-- Defined times as specified in requirement:
+           10:00 AM, 1:00 PM, 4:00 PM, 7:00 PM, 10:00 PM -->
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-title" style="font-size: 1.2rem; margin-bottom: 0.4rem;">
+          CINE<span style="color: var(--accent-red);">MITRA</span>
+        </div>
+        <p class="brand-tagline">Movies. Magic. Memories.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 CineMitra Entertainment Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    const SHOW_TIMINGS = [
+      { time: "10:00 AM", format: "Dolby Atmos 7.1", session: "Morning Show", status: "Available" },
+      { time: "1:00 PM", format: "IMAX 2D", session: "Matinee Show", status: "Filling Fast" },
+      { time: "4:00 PM", format: "Dolby Atmos 4K", session: "Afternoon Show", status: "Available" },
+      { time: "7:00 PM", format: "Laser IMAX", session: "Prime Evening", status: "Almost Full" },
+      { time: "10:00 PM", format: "Night Special", session: "Night Show", status: "Available" }
+    ];
+
+    let selectedDate = null;
+    let currentMovie = null;
+    let currentTheater = null;
+
+    function initShowsPage() {
+      currentMovie = CineMitra.getMovie();
+      currentTheater = CineMitra.getTheater();
+
+      // Error handling: if no movie is selected, fallback gracefully or redirect
+      if (!currentMovie) {
+        // Fallback default
+        currentMovie = {
+          ID: 1,
+          'Movie Name': "3 Idiots",
+          'Language': "Hindi",
+          'Genre': "Comedy, Drama",
+          'Year': 2009,
+          'Timing(min)': 170,
+          'Rating(10)': 8.4,
+          'Poster': "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&auto=format&fit=crop&q=80"
+        };
+        CineMitra.setMovie(currentMovie);
+      }
+
+      if (!currentTheater) {
+        const city = CineMitra.getCity();
+        currentTheater = {
+          id: `${city.toLowerCase()}-1`,
+          name: `PVR ICON, Pavilion Mall`,
+          city: city,
+          area: "Central Mall"
+        };
+        CineMitra.setTheater(currentTheater);
+      }
+
+      // Populate header
+      document.getElementById('show-movie-poster').src = currentMovie.Poster || '';
+      document.getElementById('show-movie-title').textContent = currentMovie['Movie Name'];
+      document.getElementById('show-movie-rating').textContent = `⭐ ${parseFloat(currentMovie['Rating(10)'] || 8.0).toFixed(1)}`;
+      document.getElementById('show-movie-lang').textContent = currentMovie['Language'];
+      document.getElementById('show-movie-genre').textContent = currentMovie['Genre'];
+      document.getElementById('show-movie-time').textContent = `${currentMovie['Timing(min)'] || 150} min`;
+      document.getElementById('show-theater-name').textContent = currentTheater.name;
+      document.getElementById('show-theater-city').textContent = currentTheater.city || CineMitra.getCity();
+
+      renderDateButtons();
+      renderShowCards();
+    }
+
+    function renderDateButtons() {
+      const container = document.getElementById('date-picker-container');
+      const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+      const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      
+      const datesList = [];
+      const today = new Date();
+
+      for (let i = 0; i < 5; i++) {
+        const d = new Date();
+        d.setDate(today.getDate() + i);
+        const dayLabel = i === 0 ? "TODAY" : (i === 1 ? "TOMORROW" : days[d.getDay()]);
+        const dateStr = `${d.getDate()} ${months[d.getMonth()]}`;
+        datesList.push({
+          label: dayLabel,
+          num: d.getDate(),
+          month: months[d.getMonth()],
+          fullString: `${dayLabel}, ${d.getDate()} ${months[d.getMonth()]}`
+        });
+      }
+
+      selectedDate = datesList[0].fullString;
+
+      container.innerHTML = datesList.map((d, index) => `
+        <button class="date-btn ${index === 0 ? 'active' : ''}" onclick="selectDate(this, '${d.fullString}')">
+          <span class="day-label">${d.label}</span>
+          <span class="day-num">${d.num}</span>
+          <span style="font-size: 0.7rem; color: var(--text-dim);">${d.month}</span>
+        </button>
+      `).join('');
+    }
+
+    function selectDate(buttonElement, dateStr) {
+      document.querySelectorAll('.date-btn').forEach(btn => btn.classList.remove('active'));
+      buttonElement.classList.add('active');
+      selectedDate = dateStr;
+      CineMitra.toast(`Selected date: ${dateStr}`);
+    }
+
+    function renderShowCards() {
+      const container = document.getElementById('shows-container');
+      container.innerHTML = SHOW_TIMINGS.map(s => `
+        <div class="show-timing-card" onclick="selectShow('${s.time}', '${s.format}')">
+          <div class="show-time">${s.time}</div>
+          <div class="show-type">${s.format}</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">${s.session}</div>
+          <div class="show-status" style="color: ${s.status === 'Almost Full' ? '#f59e0b' : '#22c55e'};">
+            ● ${s.status}
+          </div>
+          <button class="btn-primary" style="margin-top: 1rem; width: 100%; font-size: 0.8rem; padding: 0.4rem; justify-content: center;">
+            Select Seats →
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function selectShow(time, format) {
+      // Save: Movie, Theater, Date, Time
+      const showData = {
+        movie: currentMovie,
+        theater: currentTheater,
+        date: selectedDate,
+        time: time,
+        format: format
+      };
+      CineMitra.setShow(showData);
+      CineMitra.toast(`Selected: ${time} on ${selectedDate}`);
+
+      // Redirect to seats.html as specified
+      setTimeout(() => {
+        window.location.href = "seats.html";
+      }, 300);
+    }
+
+    document.addEventListener('DOMContentLoaded', initShowsPage);
+  </script>
+</body>
+</html>

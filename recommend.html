@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Movie Recommendation – CineMitra</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-container">
+      <div class="brand-logo">CM</div>
+      <div class="brand-text">
+        <span class="brand-title">CINE<span>MITRA</span></span>
+        <span class="brand-tagline">Movies. Magic. Memories.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link"><span>🏠</span> Home</a></li>
+      <li><a href="movies.html" class="nav-link"><span>🍿</span> Movies</a></li>
+      <li><a href="theaters.html" class="nav-link"><span>🏛️</span> Theaters</a></li>
+      <li><a href="recommend.html" class="nav-link active accent-pill"><span>✨</span> AI Recommendation</a></li>
+      <li><a href="mood.html" class="nav-link"><span>🎭</span> Mood Suggestion</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="location.html" class="city-badge" title="Change city">
+        <span>📍</span> <span id="nav-current-city">Pune</span>
+      </a>
+      <a href="signin.html" id="nav-user-btn" class="btn-signin">
+        <span>Sign In</span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    
+    <div style="text-align: center; max-width: 720px; margin: 0 auto 2.5rem auto;">
+      <div class="hero-badge" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;">
+        ✨ Smart Content-Based Recommendation Engine
+      </div>
+      <h1 style="font-size: 2.3rem; color: #ffffff; margin-bottom: 0.5rem;">
+        Discover Indian Cinema Tailored to You
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1rem;">
+        Our recommendation algorithm uses TF-IDF genre weighting, language preferences, release timelines, and critical rating scores from the Indian movies dataset.
+      </p>
+    </div>
+
+    <!-- Recommendation Filter Form -->
+    <div class="recommend-form-box">
+      <form id="recommend-form" onsubmit="generateRecommendations(event)">
+        <div class="form-grid">
+          
+          <!-- Language -->
+          <div class="form-field">
+            <label for="rec-language">Preferred Language</label>
+            <select id="rec-language">
+              <option value="All">Any Indian Language</option>
+              <option value="Hindi" selected>Hindi</option>
+              <option value="Marathi">Marathi</option>
+              <option value="Telugu">Telugu</option>
+              <option value="Tamil">Tamil</option>
+              <option value="Malayalam">Malayalam</option>
+              <option value="Kannada">Kannada</option>
+            </select>
+          </div>
+
+          <!-- Genre -->
+          <div class="form-field">
+            <label for="rec-genre">Preferred Genre</label>
+            <select id="rec-genre">
+              <option value="All">Any Genre</option>
+              <option value="Action" selected>Action</option>
+              <option value="Drama">Drama</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Romance">Romance</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Horror">Horror</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Crime">Crime</option>
+              <option value="Mystery">Mystery</option>
+              <option value="Biography">Biography</option>
+            </select>
+          </div>
+
+          <!-- Minimum Rating -->
+          <div class="form-field">
+            <label for="rec-min-rating">Minimum Rating: <span id="rating-val-display" style="color: var(--accent-gold); font-weight: bold;">7.5+</span></label>
+            <input 
+              type="range" 
+              id="rec-min-rating" 
+              min="5.0" 
+              max="9.0" 
+              step="0.5" 
+              value="7.5"
+              oninput="document.getElementById('rating-val-display').textContent = this.value + '+'"
+            >
+          </div>
+
+          <!-- Year Preference -->
+          <div class="form-field">
+            <label for="rec-year">Year Preference</label>
+            <select id="rec-year">
+              <option value="All">All Eras</option>
+              <option value="recent" selected>Recent (2020 – 2024)</option>
+              <option value="modern">Modern (2010 – 2019)</option>
+              <option value="classic">Golden Classics (&lt; 2010)</option>
+            </select>
+          </div>
+
+          <!-- Optional Mood -->
+          <div class="form-field" style="grid-column: 1 / -1;">
+            <label for="rec-mood">Optional Current Mood</label>
+            <select id="rec-mood">
+              <option value="">No specific mood</option>
+              <option value="Happy">😊 Happy (Feel-good, Family, Comedy)</option>
+              <option value="Excited">🔥 Excited (High adrenaline, Action, Adventure)</option>
+              <option value="Romantic">❤️ Romantic (Love, Drama)</option>
+              <option value="Suspenseful">🕵️ Suspenseful (Gripping twists, Thriller)</option>
+              <option value="Motivated">💪 Motivated (Inspirational, True Stories)</option>
+              <option value="Scared">😱 Scared (Haunting chills, Horror)</option>
+            </select>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.9rem; font-size: 1.05rem;" id="rec-submit-btn">
+          <span>✨ Find Matching Indian Movies</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Results Section -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">
+          <span class="accent-bar"></span> Top Recommended Matches
+        </h2>
+        <p class="section-subtitle" id="rec-status-subtitle">
+          Ranked by content similarity and critical acclaim
+        </p>
+      </div>
+      <div id="rec-badge-count" class="badge-rating" style="background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-subtle);">
+        0 Matches
+      </div>
+    </div>
+
+    <!-- Recommendations Grid -->
+    <div class="movies-grid" id="recommendations-container">
+      <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+        <p style="font-size: 2rem;">✨</p>
+        <p>Select your preferences above and click <strong>Find Matching Indian Movies</strong>.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-title" style="font-size: 1.2rem; margin-bottom: 0.4rem;">
+          CINE<span style="color: var(--accent-red);">MITRA</span>
+        </div>
+        <p class="brand-tagline">Movies. Magic. Memories.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 CineMitra Entertainment Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    async function generateRecommendations(e) {
+      if (e) e.preventDefault();
+      
+      const submitBtn = document.getElementById('rec-submit-btn');
+      submitBtn.innerHTML = '<span>⏳ Analyzing Indian Movies Dataset...</span>';
+      submitBtn.disabled = true;
+
+      const lang = document.getElementById('rec-language').value;
+      const genre = document.getElementById('rec-genre').value;
+      const minRating = document.getElementById('rec-min-rating').value;
+      const year = document.getElementById('rec-year').value;
+      const mood = document.getElementById('rec-mood').value;
+
+      const payload = {
+        language: lang,
+        genre: genre,
+        min_rating: parseFloat(minRating),
+        year_preference: year,
+        mood: mood
+      };
+
+      try {
+        const response = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        submitBtn.innerHTML = '<span>✨ Find Matching Indian Movies</span>';
+        submitBtn.disabled = false;
+
+        const container = document.getElementById('recommendations-container');
+        const countBadge = document.getElementById('rec-badge-count');
+
+        if (data.success && data.recommendations && data.recommendations.length > 0) {
+          countBadge.textContent = `${data.recommendations.length} Recommended Movies`;
+          document.getElementById('rec-status-subtitle').textContent = 
+            `Matches calculated using TF-IDF feature analysis for ${lang} ${genre} cinema (Rating ≥ ${minRating})`;
+
+          container.innerHTML = data.recommendations.map(m => {
+            return CineMitra.createMovieCard(m, "Book This Movie →", m.reason);
+          }).join('');
+        } else {
+          countBadge.textContent = `0 Matches`;
+          container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">
+              <p style="font-size: 2rem;">🎬</p>
+              <h3>No direct recommendations found</h3>
+              <p style="margin-top: 0.5rem;">Try lowering the minimum rating or selecting 'Any Language' to see more titles.</p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        console.error("Recommendation error:", err);
+        submitBtn.innerHTML = '<span>✨ Find Matching Indian Movies</span>';
+        submitBtn.disabled = false;
+        CineMitra.toast("Failed to compute recommendations.");
+      }
+    }
+
+    // Auto-run default recommendations on load
+    document.addEventListener('DOMContentLoaded', () => {
+      generateRecommendations();
+    });
+  </script>
+</body>
+</html>

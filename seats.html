@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Seats – CineMitra</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="brand-container">
+      <div class="brand-logo">CM</div>
+      <div class="brand-text">
+        <span class="brand-title">CINE<span>MITRA</span></span>
+        <span class="brand-tagline">Movies. Magic. Memories.</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link"><span>🏠</span> Home</a></li>
+      <li><a href="movies.html" class="nav-link"><span>🍿</span> Movies</a></li>
+      <li><a href="theaters.html" class="nav-link"><span>🏛️</span> Theaters</a></li>
+      <li><a href="recommend.html" class="nav-link"><span>✨</span> AI Recommendation</a></li>
+      <li><a href="mood.html" class="nav-link"><span>🎭</span> Mood Suggestion</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="location.html" class="city-badge" title="Change city">
+        <span>📍</span> <span id="nav-current-city">Pune</span>
+      </a>
+      <a href="signin.html" id="nav-user-btn" class="btn-signin">
+        <span>Sign In</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Step Tracker (Step 5: Seats) -->
+  <div class="booking-steps-bar">
+    <div class="steps-container">
+      <a href="signin.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Sign In</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="location.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Location</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="theaters.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Theaters</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <a href="movies.html" class="step-item completed">
+        <div class="step-circle">✓</div>
+        <span>Movies</span>
+      </a>
+      <div class="step-divider" style="background: var(--accent-gold);"></div>
+      <div class="step-item active">
+        <div class="step-circle">5</div>
+        <span>Seats</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-content">
+    
+    <!-- Active Booking Context Banner -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h2 id="seat-movie-title" style="font-size: 1.35rem; color: #ffffff;">Movie Title</h2>
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+          <span id="seat-theater-info">PVR ICON, Pune</span> • 
+          <span id="seat-date-info" style="color: var(--accent-gold);">Today</span> • 
+          <span id="seat-time-info" style="color: #ffffff; font-weight: 700;">7:00 PM</span>
+        </div>
+      </div>
+      <a href="shows.html" class="btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">
+        Change Show
+      </a>
+    </div>
+
+    <div class="seat-booking-container">
+      
+      <!-- Cinema Screen & Interactive Layout -->
+      <div>
+        
+        <!-- Screen indicator -->
+        <div class="screen-indicator-box">
+          <div class="screen-curved-bar"></div>
+          <div class="screen-label">All Eyes This Way • Cinema Screen</div>
+        </div>
+
+        <!-- Legend -->
+        <div class="seat-legend">
+          <div class="legend-item">
+            <div class="seat-sample available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="seat-sample selected"></div>
+            <span>Selected</span>
+          </div>
+          <div class="legend-item">
+            <div class="seat-sample booked"></div>
+            <span>Booked</span>
+          </div>
+        </div>
+
+        <!-- Interactive Layout -->
+        <div class="cinema-hall-layout" id="seat-grid-container">
+          <!-- Populated by JavaScript with Recliner, Premium, Standard tiers -->
+        </div>
+
+      </div>
+
+      <!-- Booking Summary Sidebar -->
+      <aside class="booking-summary-sidebar">
+        <h3 class="summary-title">Booking Summary</h3>
+
+        <div class="summary-row">
+          <span class="summary-label">Movie</span>
+          <span class="summary-value" id="summary-movie-name">Loading...</span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Theater</span>
+          <span class="summary-value" id="summary-theater-name">Loading...</span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Date & Time</span>
+          <span class="summary-value" id="summary-datetime">Loading...</span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Selected Seats</span>
+          <span class="summary-value" id="summary-seat-list" style="color: var(--accent-gold); max-width: 160px; text-align: right;">None</span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Total Seats</span>
+          <span class="summary-value" id="summary-seat-count">0</span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Ticket Subtotal</span>
+          <span class="summary-value" id="summary-subtotal">₹0</span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Convenience Fee & GST</span>
+          <span class="summary-value" id="summary-fee">₹0</span>
+        </div>
+
+        <div class="summary-row summary-total">
+          <span class="summary-label">Total Amount</span>
+          <span class="summary-value" id="summary-total-price">₹0</span>
+        </div>
+
+        <button 
+          id="btn-confirm-booking" 
+          class="btn-primary" 
+          style="width: 100%; justify-content: center; margin-top: 1.5rem; padding: 0.85rem;"
+          onclick="handleConfirmBooking()"
+          disabled
+        >
+          <span>Confirm Booking →</span>
+        </button>
+
+        <p style="font-size: 0.75rem; color: var(--text-dim); text-align: center; margin-top: 1rem;">
+          🔒 Secure 128-bit encrypted instant reservation
+        </p>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <!-- Booking Confirmation Modal Dialog -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeBookingModal()">✕</button>
+
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎉</div>
+        <h2 style="font-size: 1.6rem; color: #ffffff; margin-bottom: 0.2rem;">Booking Confirmed!</h2>
+        <p style="color: #4ade80; font-weight: 600; font-size: 0.95rem;" id="modal-booking-id">Booking ID: CM-2025-XXXX</p>
+      </div>
+
+      <div style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem;">
+        <div class="summary-row">
+          <span class="summary-label">Movie:</span>
+          <span class="summary-value" id="modal-movie"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Cinema:</span>
+          <span class="summary-value" id="modal-theater"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Showtime:</span>
+          <span class="summary-value" id="modal-time"></span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Reserved Seats:</span>
+          <span class="summary-value" style="color: var(--accent-gold); font-weight: 800;" id="modal-seats"></span>
+        </div>
+        <div class="summary-row" style="border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; margin-top: 0.5rem;">
+          <span class="summary-label">Amount Paid:</span>
+          <span class="summary-value" style="color: var(--accent-red); font-size: 1.15rem;" id="modal-amount"></span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="btn-primary" style="flex: 1; justify-content: center;" onclick="printTicket()">
+          <span>🖨️ Print Ticket</span>
+        </button>
+        <a href="index.html" class="btn-secondary" style="flex: 1; justify-content: center; text-decoration: none;">
+          <span>Back to Home</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-title" style="font-size: 1.2rem; margin-bottom: 0.4rem;">
+          CINE<span style="color: var(--accent-red);">MITRA</span>
+        </div>
+        <p class="brand-tagline">Movies. Magic. Memories.</p>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 CineMitra Entertainment Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+  <script>
+    // Seat Configuration
+    const TIERS = [
+      { name: "Recliner Lounger", price: 350, rows: ["A", "B"] },
+      { name: "Premium Class", price: 220, rows: ["C", "D", "E"] },
+      { name: "Executive Standard", price: 150, rows: ["F", "G", "H"] }
+    ];
+
+    // Some pre-booked seats to make cinema realistic
+    const PRE_BOOKED_SEATS = new Set(["A3", "A4", "B6", "C4", "C5", "C6", "D8", "E2", "F7", "G3", "G4", "H9"]);
+
+    let selectedSeatsMap = new Map(); // seatId -> price
+    let currentShow = null;
+
+    function initSeatsPage() {
+      currentShow = CineMitra.getShow();
+      const currentMovie = CineMitra.getMovie();
+      const currentTheater = CineMitra.getTheater();
+
+      const movieTitle = (currentShow && currentShow.movie && currentShow.movie['Movie Name']) || (currentMovie && currentMovie['Movie Name']) || "3 Idiots";
+      const theaterName = (currentShow && currentShow.theater && currentShow.theater.name) || (currentTheater && currentTheater.name) || "PVR ICON";
+      const theaterCity = (currentShow && currentShow.theater && currentShow.theater.city) || CineMitra.getCity();
+      const showDate = (currentShow && currentShow.date) || "Today";
+      const showTime = (currentShow && currentShow.time) || "7:00 PM";
+
+      document.getElementById('seat-movie-title').textContent = movieTitle;
+      document.getElementById('seat-theater-info').textContent = `${theaterName}, ${theaterCity}`;
+      document.getElementById('seat-date-info').textContent = showDate;
+      document.getElementById('seat-time-info').textContent = showTime;
+
+      document.getElementById('summary-movie-name').textContent = movieTitle;
+      document.getElementById('summary-theater-name').textContent = theaterName;
+      document.getElementById('summary-datetime').textContent = `${showDate} • ${showTime}`;
+
+      renderSeatGrid();
+    }
+
+    function renderSeatGrid() {
+      const container = document.getElementById('seat-grid-container');
+      let html = '';
+
+      TIERS.forEach(tier => {
+        html += `
+          <div class="seat-tier-header">
+            <span>${tier.name}</span>
+            <span>₹${tier.price}</span>
+          </div>
+        `;
+
+        tier.rows.forEach(rowLetter => {
+          html += `<div class="seat-row"><div class="row-label">${rowLetter}</div>`;
+
+          // 12 seats per row with aisle gap between 4 and 5, and 8 and 9
+          for (let num = 1; num <= 12; num++) {
+            const seatId = `${rowLetter}${num}`;
+            const isBooked = PRE_BOOKED_SEATS.has(seatId);
+            const isSelected = selectedSeatsMap.has(seatId);
+
+            if (num === 5 || num === 9) {
+              html += `<div class="seat-aisle-gap"></div>`;
+            }
+
+            if (isBooked) {
+              html += `<button class="seat-btn booked" disabled title="Seat ${seatId} is already booked">${num}</button>`;
+            } else {
+              html += `
+                <button 
+                  id="seat-${seatId}" 
+                  class="seat-btn ${isSelected ? 'selected' : ''}" 
+                  onclick="toggleSeatSelection('${seatId}', ${tier.price})"
+                  title="${rowLetter}${num} (₹${tier.price})"
+                >
+                  ${num}
+                </button>
+              `;
+            }
+          }
+
+          html += `<div class="row-label">${rowLetter}</div></div>`;
+        });
+      });
+
+      container.innerHTML = html;
+    }
+
+    function toggleSeatSelection(seatId, price) {
+      const btn = document.getElementById(`seat-${seatId}`);
+      if (!btn) return;
+
+      if (selectedSeatsMap.has(seatId)) {
+        selectedSeatsMap.delete(seatId);
+        btn.classList.remove('selected');
+      } else {
+        // Max 10 seats per booking
+        if (selectedSeatsMap.size >= 10) {
+          CineMitra.toast("Maximum 10 seats allowed per booking transaction.");
+          return;
+        }
+        selectedSeatsMap.set(seatId, price);
+        btn.classList.add('selected');
+      }
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const seatList = Array.from(selectedSeatsMap.keys()).sort();
+      const count = seatList.length;
+
+      let subtotal = 0;
+      selectedSeatsMap.forEach(price => { subtotal += price; });
+
+      // Convenience fee ₹30 per seat + 18% GST on fee
+      const fee = count > 0 ? Math.round(count * 35.4) : 0;
+      const total = subtotal + fee;
+
+      document.getElementById('summary-seat-list').textContent = count > 0 ? seatList.join(', ') : 'None';
+      document.getElementById('summary-seat-count').textContent = count;
+      document.getElementById('summary-subtotal').textContent = `₹${subtotal}`;
+      document.getElementById('summary-fee').textContent = `₹${fee}`;
+      document.getElementById('summary-total-price').textContent = `₹${total}`;
+
+      const confirmBtn = document.getElementById('btn-confirm-booking');
+      confirmBtn.disabled = count === 0;
+      if (count > 0) {
+        confirmBtn.style.opacity = '1';
+        confirmBtn.style.cursor = 'pointer';
+      } else {
+        confirmBtn.style.opacity = '0.5';
+        confirmBtn.style.cursor = 'not-allowed';
+      }
+    }
+
+    async function handleConfirmBooking() {
+      const seatList = Array.from(selectedSeatsMap.keys()).sort();
+      if (seatList.length === 0) {
+        CineMitra.toast("Please select at least one seat to book.");
+        return;
+      }
+
+      const movieTitle = document.getElementById('summary-movie-name').textContent;
+      const theaterName = document.getElementById('summary-theater-name').textContent;
+      const showDateTime = document.getElementById('summary-datetime').textContent;
+      const totalPrice = document.getElementById('summary-total-price').textContent;
+      const user = CineMitra.getUser();
+
+      const payload = {
+        movie: movieTitle,
+        theater: theaterName,
+        city: CineMitra.getCity(),
+        date: showDateTime.split('•')[0].trim(),
+        time: showDateTime.split('•')[1] ? showDateTime.split('•')[1].trim() : '7:00 PM',
+        seats: seatList,
+        totalPrice: totalPrice,
+        userEmail: user ? user.email : 'guest@cinemitra.in'
+      };
+
+      try {
+        const res = await fetch('/api/booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (data.success && data.booking) {
+          // Show booking summary modal
+          document.getElementById('modal-booking-id').textContent = `Booking ID: ${data.booking.bookingId}`;
+          document.getElementById('modal-movie').textContent = data.booking.movie;
+          document.getElementById('modal-theater').textContent = `${data.booking.theater} (${data.booking.city})`;
+          document.getElementById('modal-time').textContent = `${data.booking.date} at ${data.booking.time}`;
+          document.getElementById('modal-seats').textContent = `${data.booking.seats.join(', ')} (${data.booking.seatCount} Seats)`;
+          document.getElementById('modal-amount').textContent = data.booking.totalPrice;
+
+          document.getElementById('booking-modal').classList.add('active');
+
+          // Mark selected seats as booked in current session
+          seatList.forEach(s => PRE_BOOKED_SEATS.add(s));
+          selectedSeatsMap.clear();
+          renderSeatGrid();
+          updateSummary();
+        } else {
+          CineMitra.toast(data.message || "Booking failed, please try again.");
+        }
+      } catch (err) {
+        console.error("Booking error:", err);
+        CineMitra.toast("Error connecting to booking service.");
+      }
+    }
+
+    function closeBookingModal() {
+      document.getElementById('booking-modal').classList.remove('active');
+    }
+
+    function printTicket() {
+      window.print();
+    }
+
+    document.addEventListener('DOMContentLoaded', initSeatsPage);
+  </script>
+</body>
+</html>
